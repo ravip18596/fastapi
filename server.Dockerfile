@@ -1,5 +1,13 @@
-FROM python:3.7-apline
+FROM python:3.7-stretch
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+WORKDIR /fastapi
+
+COPY ./requirements.txt /fastapi/requirements.txt
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /fastapi
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
 
 
